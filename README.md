@@ -1,6 +1,6 @@
 # Varnish
 
-This container contains Varnish 5 on top of Debian
+This container contains Varnish 5 on top of Debian.
 
 ## Configuring Varnish
 Create a new VCL file for your requirements, using the docker service name for your host. The following in an example
