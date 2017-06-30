@@ -1,14 +1,17 @@
-FROM debian:latest
+FROM debian:stretch
 
 MAINTAINER Anthony Porthouse <anthony.porthouse@groundsix.com>
 
 RUN apt-get update \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y debian-archive-keyring \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y apt-utils apt-transport-https gnupg \
   && DEBIAN_FRONTEND=noninteractive apt-get install -y curl \
-  && curl -O https://repo.varnish-cache.org/pkg/5.0.0/varnish_5.0.0-1_amd64.deb \
-  && (dpkg -i varnish_5.0.0-1_amd64.deb 2> /dev/null || true) \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -yf \
-  && rm varnish_5.0.0-1_amd64.deb \
+  && curl -sSf "https://packagecloud.io/install/repositories/varnishcache/varnish5/config_file.list?os=debian&dist=stretch" | tee /etc/apt/sources.list.d/varnish5.list \
+  && curl -L "https://packagecloud.io/varnishcache/varnish5/gpgkey" | apt-key add - \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y varnish=5.1.2-1~stretch \
   && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 6081
