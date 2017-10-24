@@ -1,6 +1,6 @@
 FROM debian:stretch
 
-MAINTAINER Anthony Porthouse <anthony.porthouse@groundsix.com>
+MAINTAINER Anthony Porthouse <anthony@porthou.se>
 
 RUN apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get install -y debian-archive-keyring \
@@ -11,7 +11,7 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -y varnish=5.1.2-1~stretch \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y varnish=5.2.0-1~stretch \
   && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 6081
